@@ -1,0 +1,66 @@
+{
+  "files.associations": {
+    "*.md.j2": "markdown",
+    "*.yml.j2": "yaml",
+    "*.env": "shellscript"
+  },
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.rulers": [
+    79
+  ],
+  "security.workspace.trust.untrustedFiles": "open",
+  "editor.fontSize": 14,
+  "editor.lineNumbers": "relative",
+  "workbench.tree.indent": 30,
+  "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#ffffff"
+  },
+  "workbench.tree.renderIndentGuides": "always",
+  "workbench.editor.enablePreview": false,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "editor.minimap.enabled": false,
+  "window.commandCenter": true,
+  "workbench.startupEditor": "none",
+  "[shellscript]": {
+    "editor.tabSize": 2
+  },
+  "window.openFilesInNewWindow": "off",
+  "window.openFoldersInNewWindow": "on",
+  "workbench.editor.empty.hint": "hidden",
+  "window.zoomLevel": 1,
+  "terminal.integrated.suggest.cdPath": "off",
+  "terminal.integrated.suggest.enabled": false,
+  "extensions.ignoreRecommendations": true,
+  "window.autoDetectColorScheme": true,
+  "terminal.integrated.initialHint": false,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-d>"],
+      "after": ["<C-d>", "z", "z"]
+    },
+    {
+      "before": ["<C-u>"],
+      "after": ["<C-u>", "z", "z"]
+    },
+    {
+      "before": ["j"],
+      "after": ["j", "z", "z"]
+    },
+    {
+      "before": ["k"],
+      "after": ["k", "z", "z"]
+    }
+  ],
+  "vim.handleKeys": {
+    "<C-p>": false,
+    "<C-f>": false,
+    "<C-b>": false,
+    "<C-w>": false,
+    "<C-n>": false,
+    "<C-h>": false
+  },
+  "workbench.preferredDarkColorTheme": "Dracula Theme"
+}

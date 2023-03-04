@@ -1,0 +1,125 @@
+# Further one-time settings:
+# To prune on fetch:
+#     git config remote.origin.prune true
+# To globally ignore:
+#     code ~/.config/git/ignore
+# To use VS code for git:
+#     git config --global core.editor "code --wait"
+# To disable lazy nvim auto-formatting:
+#     https://github.com/jamesiain/nvim/commit/64b285c8739b1aaee959621bb2f21a0b47c227c0
+
+if [[ -t 1 && -z "$NO_COLOR" ]]; then
+  GREY="\e[90m"
+  RED_BOLD="\e[1;31m"
+  RESET="\e[0m"
+else
+  GREY=""
+  RED_BOLD=""
+  RESET=""
+fi
+
+git config --global advice.detachedHead false
+git config --global fetch.prune true
+
+alias tasks="code ~/.tasks.md"
+alias sshconf="code ~/.ssh/config"
+alias gk="gitk --all &"
+alias c="clear"
+
+# git push-related
+p() {
+  # Ensure we're in a git repository.
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    echo "ERROR: Not in a git repository" >&2
+    return 1
+  fi
+
+  if [ -z "$(git branch --show-current)" ]; then
+    echo "ERROR: Not in a branch" >&2
+    return 1
+  fi
+
+  echo -e "${GREY}git push --force-with-lease origin HEAD${RESET}"
+  git push --force-with-lease origin HEAD
+}
+
+# git fetch-related
+f() {
+  # Ensure we're in a git repository.
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    echo "ERROR: Not in a git repository" >&2
+    return 1
+  fi
+
+  echo -e "${GREY}git fetch origin${RESET}"
+  git fetch origin
+
+  if git branch -r -l 'origin/master' | xargs | grep --quiet '^origin/master'; then
+    echo -e "${GREY}git branch -f master origin/master${RESET}"
+    git branch -f master origin/master
+  elif git branch -r -l 'origin/main' | xargs | grep --quiet '^origin/main'; then
+    echo -e "${GREY}git branch -f main origin/main${RESET}"
+    git branch -f main origin/main
+  fi
+}
+
+# git rebase-related
+r() {
+  local target="$1"
+
+  if [ -z "$target" ]; then
+    echo "Usage: r <branch>" >&2
+    return 1
+  fi
+
+  # Ensure we're in a git repository.
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    echo "ERROR: Not in a git repository" >&2
+    return 1
+  fi
+
+  # Find principal branch.
+  local principal
+  if git show-ref --verify --quiet refs/heads/main || git show-ref --verify --quiet refs/remotes/origin/main; then
+    principal=main
+  elif git show-ref --verify --quiet refs/heads/master || git show-ref --verify --quiet refs/remotes/origin/master; then
+    principal=master
+  else
+    echo "ERROR: Could not find main or master branch" >&2
+    return 1
+  fi
+
+  # If working tree and index are clean, checkout the target branch.
+  local _git_status
+  _git_status="$(git status --porcelain)"
+  if [ -z "$_git_status" ]; then
+    echo -e "${GREY}git checkout --quiet $target${RESET}"
+    if ! git checkout --quiet "$target"; then
+      echo "ERROR: Could not checkout branch: $target"
+      return 1
+    fi
+  else
+    echo "ERROR: Detected dirty working stage"
+    echo "$_git_status"
+    return 1
+  fi
+
+  echo -e "${GREY}git rebase $principal${RESET}"
+  git rebase "$principal"
+}
+
+_r_completion() {
+  local cur
+  cur="${COMP_WORDS[COMP_CWORD]}"
+
+  COMPREPLY=($(
+    compgen -W "$(
+      {
+        git for-each-ref --format='%(refname:short)' refs/heads
+        # git for-each-ref --format='%(refname:short)' refs/remotes
+      } | sort -u
+    )" -- "$cur"
+  ))
+}
+
+complete -F _r_completion r

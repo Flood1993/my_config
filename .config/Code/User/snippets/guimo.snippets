@@ -1,0 +1,17 @@
+{
+	"Python: Dynamically add to path": {
+		"body": [
+			"import os",
+			"import sys",
+			"",
+			"sys.path.insert(0, os.path.join(os.path.dirname(__file__), \"rel_dir\"))",
+		]
+	},
+	"Bash: Pipe find matches into while loop": {
+		"body": [
+			"while IFS= read -r -d '' f; do",
+			"  $0",
+			"done < <(find $1 -mindepth 2 -maxdepth 2 -type f -name 'pyproject.toml' -print0)"
+		]
+	}
+}
