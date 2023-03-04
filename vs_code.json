@@ -1,0 +1,26 @@
+{
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "editor.rulers": [
+      79,
+      99
+    ],
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.fontSize": 14,
+    "workbench.tree.indent": 30,
+    "workbench.colorCustomizations": {
+      "tree.indentGuidesStroke": "#ffffff"
+    },
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.editor.enablePreview": false,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "editor.minimap.enabled": true,
+    "window.commandCenter": true,
+    "[python]": {
+      "editor.formatOnType": true
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "workbench.startupEditor": "none"
+}
