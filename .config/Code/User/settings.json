@@ -36,6 +36,8 @@
   "extensions.ignoreRecommendations": true,
   "window.autoDetectColorScheme": true,
   "terminal.integrated.initialHint": false,
+  "accessibility.dimUnfocused.enabled": true,
+  "accessibility.dimUnfocused.opacity": 0.4,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<C-d>"],
